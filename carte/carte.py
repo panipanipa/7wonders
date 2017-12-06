@@ -8,6 +8,8 @@ os.chdir("/home/denis/PycharmProjects/7wonder/carte")
 # le separateur d'information est le ";" pour des reutilisations de code deja fait
 # ben oui, je suis pour le recyclage
 
+#fonction inutile si on utilise la librairie pandas mais c'est trop dur pour moi de m'en separer
+
 def info_d(chaine):
     compteur = 0
     nom = ""
@@ -40,10 +42,7 @@ def info_d(chaine):
 
     return [nom, nb_joueur, effet, cout, chainage, chainera, couleur]
 
-#with open("/home/denis/PycharmProjects/7wonder/carte/test_effet.txt", "r") as list_info:
-    #info = list_info.read()
-    #lignes_info = list_info.readline()
-    #lignes_info = list_info.readline()
+
 
 
 
@@ -125,12 +124,23 @@ def test_trigger(info, at_joueur):
     Trigger_effet(info, at_joueur)
     print(at_joueur['Bois'])
 
+#fonction qui renvoie un boolean indiquant si la carte est chainable on non
 def Est_chainable(nom_carte_qui_chaine, liste_carte):
-    if nom_carte_qui_chaine != " ":
+    Resultat = False
+    if nom_carte_qui_chaine != "":
         for c in liste_carte:
             if c['nom'] == nom_carte_qui_chaine:
-                return True
+                Resultat = True
+    return Resultat
 
+#cout est une variable définissant le cout d'une carte (a modifie pour chaque carte)
+cout = ""
+
+
+#fonction qui renvoie un boolean indiquant si les attributs passes en argument permettent de jouer la carte
+#cout est une variable définissant le cout d'une carte (a modifie pour chaque carte)
+#cout est un string contenant lees clefs des ressources et leur nombre requis avec " " comme separateur
+#exemple : cout = "Bois 2 Pierre 2"
 def Ressources_presente (attribut, cout):
     i = 0
     info_c = list()
@@ -142,24 +152,27 @@ def Ressources_presente (attribut, cout):
         i += 2
     return Resultat
 
+#fonction qui renvoie le boolean indiquant si la carte a deja ete joue
 def Est_deja_jouee(id, attribut):
+    Resultat = False
     for c in attribut['liste_id']:
         if c == id:
-            return True
+            Resultat = True
+    return Resultat
 
 
-#cout est une variable définissant le cout d'une carte (a modifie pour chaque carte)
-cout = ""
 
+#definition de notre type carte
 carte = dict()
-carte = {#'pre_f': Est_Jouable(liste_attribut, carte),\
-         #'pre_a': Payer_Carte(liste_attribut),\
-         'post':  Trigger_effet,\
-         'nom': " ",\
-         'cout': "",\
-         'chainee': "",\
+carte = {'nom': " ",\
          #couleur est soit indeterminé(i) bleu(b) marron(m) grise(g) rouge(r) verte(v) jaune(j) violet(vi)
          'couleur': "i",\
+         #entier associe a une carte pour la designer
+         'id' : 0,\
+         #fonction qui permet de savoir si la carte est jouable
+         'pre': Ressources_presente and Est_chainable and Est_deja_jouee, \
+         #fonction appliquant l'effet de la carte
+         'post':  Trigger_effet,\
          }
 
 def Est_Jouable_prototype(liste_attribut, carte):

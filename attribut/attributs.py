@@ -32,7 +32,8 @@ Achat = dict()
 Achat = {'marrondroite' : 2, 'grise' : 2, 'marrongauche' :2}
 
 
-#Joueurs c'est la liste des joueurs autour de la table
+#attributs est le type contenant tout les variables associé à un joueur
+#exemple : sa production
 Attributs = dict()
 Attributs = {'Nbr_c_b': 0,\
              'Nbr_c_m': 0,\
