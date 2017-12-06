@@ -1,0 +1,85 @@
+joueur ensemble de ressource et d'effet, or
+objet ? fonctionnel ?
+
+carte 
+	{ 
+	pre_f : fonction : [A1, A2, A3, U2] -> bool ~ Est_Jouable 
+	pre_a : [A1, A2, A3] -> void ~ Payer_Carte
+	post : fonction : Joueur_attribut -> void ~ en c void post (Joueur j) ~ Triger_effet
+	nom
+	couleur
+	Id ?
+	}
+	
+Ucarte = list [carte1, carte2, ...] 
+carte simple donne Ucarte = [carte]
+
+attribut -> notre production
+	-> notre production + achats
+
+généré code, tableau format texte puis substitution on peut générer du python
+
+exemple :
+a 8
+b 12
+c 24
+d 6
+|
+8 =new objetct (""); a
+12 =... b	
+
+
+cf lambda python
+
+Mefiance aux niveaux des dépendances !!!
+
+JOueur contient :
+attribut
+Cartes (-> attributs)
+
+on peut faire des des fonctions génériques
+
+pre_res ("wood", 8); 
+pre_rs2("...", ...);
+
+achat : (Us, attributs_V, attributs_M, res) -> void
+//ou (Uv, Am, res);
+
+Jouer_carte (J1, J2, J3) -> void (ds joueur)
+
+"coder la partie"
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Besoin de créer une fonction Jouable qui prendrait 3 fonctions:
+Est_deja_jouee 
+est_chainable
+Est_Jouable (on regarde si peut la produire avec nos ressources ou nos achats)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+faire les achats avant de jouer la carte
+Puis jouer la carte
+
+
+carte (redefinition) :
+
+pre_f(cout, chainee) ->bool ----> pre_f = Est_Jouable(attributs, cout)
+post
+nom
+couleur
+
+
+carte18 = { nom = "Bain" ;
+            couleur = "b" ;
+            id = 603
+            pre = (fun atts -> Resseources_presentes (atts, { Bois : 1 ; Pierre : 2 }
+                                and Chainable(atts, ..)
+                                and not Deja_jouee (attrs, 603  )
+            }
+            
+            
+
+
+
+
