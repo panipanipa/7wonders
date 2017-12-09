@@ -31,6 +31,8 @@ Science = {'Psm': 0, 'Pse': 0, 'Psi': 0}
 Achat = dict()
 Achat = {'marrondroite' : 2, 'grise' : 2, 'marrongauche' :2}
 
+ID = list()
+
 
 #attributs est le type contenant tout les variables associé à un joueur
 #exemple : sa production
@@ -47,5 +49,20 @@ Attributs = {'Nbr_c_b': 0,\
              'Production_s': dict(Ressources),\
              'Production_c': list(Production_xor),\
              'Production_a': dict(Ressources),\
-             'liste_id': list(), \
+             'liste_id': list(ID), \
              'Nbr_PV': 0}
+
+# creation d'une fonction pour creer un attributs
+# probleme de referencement sinon pour les dictionnaire de dictionnaires
+
+def init_attribut():
+    res = dict(Attributs)
+    res['Science'] = dict(Attributs['Science'])
+    res['prix_achat'] = dict(Attributs['prix_achat'])
+    res['Production_s'] = dict(Attributs['Production_s'])
+    res['Production_c'] = list(Attributs['Production_c'])
+    res['Production_a'] = dict(Attributs['Production_a'])
+    res['liste_id'] = list(Attributs['liste_id'])
+    return res
+
+
