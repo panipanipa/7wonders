@@ -133,6 +133,15 @@ def Est_chainable(nom_carte_qui_chaine, liste_carte):
                 Resultat = True
     return Resultat
 
+#fonction qui renvoie un boolean indiquant si la carte est chainable on non
+def Est_chainable_id(id_qui_chaine, liste_id):
+    Resultat = False
+    if id_qui_chaine != 0:
+        for c in liste_id:
+            if c == id_qui_chaine:
+                Resultat = True
+    return Resultat
+
 #cout est une variable définissant le cout d'une carte (a modifie pour chaque carte)
 cout = ""
 
@@ -165,12 +174,19 @@ def Est_deja_jouee(id, attribut):
 #definition de notre type carte
 carte = dict()
 carte = {'nom': " ",\
+
          #couleur est soit indeterminé(i) bleu(b) marron(m) grise(g) rouge(r) verte(v) jaune(j) violet(vi)
          'couleur': "i",\
+
          #entier associe a une carte pour la designer
          'id' : 0,\
+
          #fonction qui permet de savoir si la carte est jouable
-         'pre': Ressources_presente and Est_chainable and Est_deja_jouee, \
+         #'pre': (Ressources_presente or Est_chainable_id) and not Est_deja_jouee, \
+         'pre': lambda att_k, cout_k , id_k, liste_id, id_c : \
+             ( Ressources_presente(att_k, cout_k) or Est_chainable_id(id_c, liste_id)) \
+             and not Est_deja_jouee(id_k, att_k), \
+
          #fonction appliquant l'effet de la carte
          'post':  Trigger_effet,\
          }
