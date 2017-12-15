@@ -1,6 +1,6 @@
 import attribut.attributs
 import os
-os.chdir("/home/denis/PycharmProjects/7wonder/carte")
+# os.chdir("/home/denis/PycharmProjects/7wonder/carte")
 # faudra changer cette commande selon ton cas
 
 # le but de ce programme est de lire dans un fichier les differentes informations

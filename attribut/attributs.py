@@ -20,9 +20,9 @@ Production_simple_exemple = {'Pierre' : 2, \
 'Or' : 5}
 
 #Production_xor : dictionnaire contenant les ressources xor présentes chez les joueurs
-Production_xor = list ()
-Production_xor = []
-Production_xor_exemple = [("Bois","Argile"), ("Bois","Pierre","Argile","Minerai")]
+Production_xor = dict ()
+Production_xor = {Joker
+Production_xor_exemple = ["Bois Pierre","Pierre Bois"]
 
 #Science : liste contenant la science math, ecriture et inginerie
 Science = dict()
