@@ -191,6 +191,14 @@ carte = {'nom': " ",\
          'post':  Trigger_effet,\
          }
 
+def init_carte_pds(read_excel, att_k):
+    karte = dict(carte)
+    karte['nom'] = read_excel[0]
+    karte['id'] = read_excel[7]
+    karte['couleur'] = read_excel[6]
+    karte['post'] (read_excel[2],att_k)
+    karte['pre'] (att_k, read_excel[3], karte['id'], att_k['liste_id'], read_excel[4])
+
 def Est_Jouable_prototype(liste_attribut, carte):
 
     # bool pour savoir si le joueur veut toujours jouer la carte
