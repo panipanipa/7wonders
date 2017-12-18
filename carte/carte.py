@@ -1,4 +1,6 @@
-import attribut/attributs.py
+import sys
+sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
+import attribut.attributs
 import os
 # os.chdir("/home/denis/PycharmProjects/7wonder/carte")
 # faudra changer cette commande selon ton cas
@@ -265,8 +267,9 @@ def Est_Jouable_prototype(attribut_j, karte):
 
 #            mem = 10
 #            for res_possible in attributs_vendeur.Liste_ressources_possibles:
-                a = differencier(res_a_acheter, res_possible)
-                if a < mem:
+#                a = differencier(res_a_acheter, res_possible)
+''' \
+                'if a < mem:
                     mem = a
             if mem != 0 :
                 return False
@@ -314,7 +317,7 @@ def Est_Jouable_prototype(attribut_j, karte):
             Q = False
             V = False
             Ress_achat_D = attribut.attributs.Ressources
-            Ress_achat_G = attribut.attributs.Ressources
+            Ress_achat_G = attribut.attributs.Ressources 
             cout_d = 0
             cout_g = 0
             while (not Q) and (not V):
@@ -351,13 +354,13 @@ def Est_Jouable_prototype(attribut_j, karte):
                     liste_attribut[2]['Production_s']['Or'] -= cout_tot
                     liste_attribut[1]['Production_s']['Or'] += cout_g
                     liste_attribut[3]['Production_s']['Or'] += cout_d
-                    return True
+                    return T
                 else:
                     return False
             else:
                 return False
     else:
-        return True
+        return True'''
 
 
 
