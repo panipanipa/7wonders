@@ -1,9 +1,9 @@
-import attribut.attributs.py
-import carte.cartes
+import sys
+sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
+import attribut.attributs
+import carte.carte
 
-
-
-attributs_acheteur = dict(attribut.Attributs)
+attributs_acheteur = dict(attribut.attributs.Attributs)
 attributs_vendeur = dict(attribut.attributs.Attributs)
 res_a_acheter = dict(attribut.attributs.Ressources)
 
