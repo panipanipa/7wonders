@@ -1,4 +1,4 @@
-import attribut.attributs
+import attribut/attributs.py
 import os
 # os.chdir("/home/denis/PycharmProjects/7wonder/carte")
 # faudra changer cette commande selon ton cas
@@ -44,7 +44,24 @@ def info_d(chaine):
 
 
 
+def differencier(ressources_manquante, ressources_vendeur):
+    mem = 0
+    for res, val in ressources_manquante.items:
+        if val > ressources_vendeur['res']:
+            mem += val - ressources_vendeur['res']
+    return mem
 
+
+def differencier_cartes(ressources_manquante, ressources_joueur):
+    mem_m = 0
+    mem_g = 0
+    for res, val in ressources_manquante.items:
+        if val > ressources_joueur['res']:
+            if res in ['Tissu','Verre','Papyrus'] :
+                mem_g += (val - ressources_joueur['res'])
+            else :
+                mem_m += (val - ressources_joueur['res'])
+    return mem_m, mem_g
 
 
 liste_attribut = list();
@@ -57,7 +74,7 @@ A3=attribut
 liste_attribut = [A1, A2, A3]
 
 
-def Faut_il_faire_un_truc(Ressource_manquante):
+def Faut_il_faire_un_truc(Ressource_manquante) -> object:
     RAF = True
     for val in Ressource_manquante.values:
         if val != 0:
@@ -76,6 +93,9 @@ def Est_Achetable(Attribut_vendeur, Ressources_manquantes):
             Ressources_manquantes[res] = 0
 
             # maintenant, on travaille uniquement avec les ressources manquantes et on vérifie si il faut allez utiliser les ressource xor
+
+
+
 
     RienAFaire = Faut_il_faire_un_truc(Ressources_manquantes)
     if not RienAFaire:
@@ -199,24 +219,60 @@ def init_carte_pds(read_excel, att_k):
     karte['post'] (read_excel[2],att_k)
     karte['pre'] (att_k, read_excel[3], karte['id'], att_k['liste_id'], read_excel[4])
 
-def Est_Jouable_prototype(liste_attribut, carte):
+attribut_j = dict(attribut.attributs.Attributs)
+karte = dict(carte)
+
+def Est_Jouable_prototype(attribut_j, karte):
 
     # bool pour savoir si le joueur veut toujours jouer la carte
-    Q = False
+    playable = True
     # differents cas selon si la carte est chainable
 
     # on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
     Ressources_manquante = attribut.attributs.Ressources
     # on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
-    for ress, val in carte.cout.items:
-        prod_ac = liste_attribut[2]['Production_s'][ress]
+    for ress, val in karte.cout.items:
+        prod_ac = attribut_j['Production_s'][ress]
         if val > prod_ac:
             Ressources_manquante[ress] = val - prod_ac
-            print("il vous manque ", val - prod_ac, " ", ress, )
+            print("il vous manque dans vos ress simples", val - prod_ac, " ", ress, )
+            playable = False
         else:
             Ressources_manquante[ress] = 0
+    if not playable :
+        playable = True
+        for ress, val in Ressources_manquante.items :
+            if Ressources_manquante[ress] != 0 and attribut_j['Production_a'][ress] != 0 :
+                Ressources_manquante[ress] -= attribut_j['Production_a'][ress]
+            if Ressources_manquante[ress] > 0 :
+                playable = False
+        if not playable :
+            mem_g = 10
+            mem_m = 10
+            for res_possible in attribut_j.Liste_ressources_possibles:
+                a,b = differencier_cartes(Ressources_manquante, res_possible)
+                if a < mem_m:
+                    mem_m = a
+                if b < mem_g:
+                    mem_g = b
+            if mem_m <=attribut_j['Production_c']['JokerM'] and mem_g <= attribut_j['Production_c']['JokerG'] :
+                playable = True
+    return playable
 
+################################################################################################################
+        #Tout ce qu'il y a après est inutile
+
+
+#            mem = 10
+#            for res_possible in attributs_vendeur.Liste_ressources_possibles:
+                a = differencier(res_a_acheter, res_possible)
+                if a < mem:
+                    mem = a
+            if mem != 0 :
+                return False
+    return True
             # maintenant, on travaille uniquement avec les ressources manquantes et on vérifie si il faut allez utiliser les ressource xor
+
 
     RienAFaire = Faut_il_faire_un_truc(Ressources_manquante)
     if not RienAFaire:
