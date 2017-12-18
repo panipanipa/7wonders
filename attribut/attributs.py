@@ -20,9 +20,14 @@ Production_simple_exemple = {'Pierre' : 2, \
 'Or' : 5}
 
 #Production_xor : dictionnaire contenant les ressources xor présentes chez les joueurs
-Production_xor = dict ()
-Production_xor = {Joker
-Production_xor_exemple = ["Bois Pierre","Pierre Bois"]
+
+Production_c = dict()
+Production_c = {'JokerM': 0,
+                'JokerG': 0,
+                'Liste_ressources_possibles': list(Ressources)}
+#JokerM et JokerG sont les ressources qui ont le plus de choix
+
+#Production_xor_exemple = ["Bois Pierre","Pierre Bois"]
 
 #Science : liste contenant la science math, ecriture et inginerie
 Science = dict()
@@ -47,7 +52,7 @@ Attributs = {'Nbr_c_b': 0,\
              'Science': dict(Science),\
              'prix_achat': dict(Achat),\
              'Production_s': dict(Ressources),\
-             'Production_c': list(Production_xor),\
+             'Production_c': dict(Production_c),\
              'Production_a': dict(Ressources),\
              'liste_id': list(ID), \
              'Nbr_PV': 0}
@@ -60,7 +65,7 @@ def init_attribut():
     res['Science'] = dict(Attributs['Science'])
     res['prix_achat'] = dict(Attributs['prix_achat'])
     res['Production_s'] = dict(Attributs['Production_s'])
-    res['Production_c'] = list(Attributs['Production_c'])
+    res['Production_c'] = dict(Attributs['Production_c'])
     res['Production_a'] = dict(Attributs['Production_a'])
     res['liste_id'] = list(Attributs['liste_id'])
     return res
