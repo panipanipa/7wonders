@@ -57,7 +57,22 @@ def triger_achat_ressource(attributs_acheteur,attributs_vendeur, montant, ressou
         attributs_acheteur['Production_a'][res]+= val
     #cette fonction effectue l'echange d'argent et l'ajout des ressources achetées
 
+# demande est un string
+# cle  puis le nombre voulu
+def achat (attributs_acheteur, attributs_vendeur, demande, orientation):
+    list_demande = demande.split(' ')
+    cardinal = len(list_demande)
+    i = 0
+    offre = dict(attribut.attributs.Ressources)
+    while i < cardinal:
+        offre[list_demande[i]] = int(list_demande[i + 1])
+        i += 2
 
+    if ressource_achetable(attributs_vendeur, demande):
+        prix = montant_a_payer(attributs_acheteur, demande, orientation)
+
+        if prix > attributs_acheteur['Production_s']['Or']:
+            triger_achat_ressource(attributs_acheteur, attributs_vendeur, prix, demande)
 #
 
 

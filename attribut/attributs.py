@@ -78,4 +78,13 @@ def init_attribut():
     res['liste_id'] = list(Attributs['liste_id'])
     return res
 
+def stringtoRessources(phrase):
+    info = phrase.split(' ')
+    cardinal = len(info)
+    i = 0
+    Resultat = dict(Ressources)
+    while i < cardinal:
+        Resultat[info[i]] = int(info[i + 1])
+        i += 2
+
 
