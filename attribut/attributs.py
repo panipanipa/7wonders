@@ -20,8 +20,7 @@ Production_simple_exemple = {'Pierre' : 2, \
 'Or' : 5}
 
 Armee = dict()
-Armee = {'Force' : 0, \
-         'PV1' : 0, \
+Armee = {'PV1' : 0, \
          'PV3' : 0, \
          'PV5' : 0, \
          'PD' : 0, }
@@ -31,7 +30,8 @@ Armee = {'Force' : 0, \
 Production_c = dict()
 Production_c = {'JokerM': 0,
                 'JokerG': 0,
-                'Liste_ressources_possibles': list(Ressources)}
+                #elle contient des dict ressources
+                'Liste_ressources_possibles': list()}
 #JokerM et JokerG sont les ressources qui ont le plus de choix
 
 #Production_xor_exemple = ["Bois Pierre","Pierre Bois"]
@@ -63,6 +63,7 @@ Attributs = {'Nbr_c_b': 0,\
              'Production_a': dict(Ressources),\
              'liste_id': list(ID),\
              'Nbr_PV': 0,\
+             'Force' : 0, \
              'Armee' : dict(Armee)}
 
 # creation d'une fonction pour creer un attributs
@@ -79,12 +80,17 @@ def init_attribut():
     return res
 
 def stringtoRessources(phrase):
-    info = phrase.split(' ')
-    cardinal = len(info)
-    i = 0
     Resultat = dict(Ressources)
-    while i < cardinal:
-        Resultat[info[i]] = int(info[i + 1])
-        i += 2
+    if phrase == "":
+        return Resultat
+    else:
+        info = phrase.split(' ')
+        cardinal = len(info)
+        i = 0
+
+        while i < cardinal:
+            Resultat[info[i]] = int(info[i + 1])
+            i += 2
+        return Resultat
 
 

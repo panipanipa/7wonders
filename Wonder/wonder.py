@@ -3,16 +3,18 @@ sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
 import attribut.attributs
 import carte.carte
 
-wonderAB = dict()
-wonderAB = {'wonderA' : wonderA, \
-            'wonderB' : wonderB, }
-
 wonder = dict()
-wonder = {'etage1': " ", \
-          'etage2': " ", \
-          'etage3': " ", \
+wonder = {'nbr_etage': 0, \
           'nom': " ", \
+          #dans la liste ce sera une liste de carte avec les couts et effet de la merveille
+          'liste_etage' : list(), \
           'Bonus_Start': " "}
 
-wonderA=dict(wonder) 
+wonderAB = dict()
+wonderAB = {'wonderA' : wonder, \
+            'wonderB' : wonder, }
+
+
+
+
 
