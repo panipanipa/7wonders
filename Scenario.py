@@ -9,7 +9,9 @@ Joueur1 = dict(Joueur.Joueur.Joueur)
 Joueur2 = dict(Joueur.Joueur.Joueur)
 Joueur3 = dict(Joueur.Joueur.Joueur)
 
-Joueur1 = Joueur.Joueur.init_joueur(merveille)
+Joueur1 = Joueur.Joueur.Init_Joueur("merveille")
+Joueur2 = Joueur.Joueur.Init_Joueur("merveille")
+Joueur3 = Joueur.Joueur.Init_Joueur("merveille")
 
 
 #Joueur1['attributs']= attribut.attributs.init_attribut()
@@ -48,6 +50,22 @@ if karte['pre'] (Joueur3['attributs'] , cout_k, 14, Joueur3['attributs']['liste_
     Joueur3['attributs']['liste_id'].append(karte['id'])
 
 print("joueur 3 : \n" , Joueur3)
+
+# tour 2
+
+Joueur1['attributs']['Production_s']['Or'] += 2
+Joueur.Joueur.achat(Joueur1['attributs'], Joueur2['attributs'], "Bois 1", "droite")
+karte = dict(carte.carte.carte)
+cout_k = "Bois 1"
+karte['nom'] = "Palissade"
+karte['couleur'] = 'r'
+karte['id'] = 29
+if karte['pre'] (Joueur1['attributs'] , cout_k, 29, Joueur1['attributs']['liste_id'], 0):
+    karte['post']("Force 1", Joueur1['attributs'])
+    Joueur3['attributs']['liste_id'].append(karte['id'])
+
+print("joueur 1 : \n" , Joueur1)
+
 
 karte = dict(carte.carte.carte)
 cout_k = "Pierre 1"

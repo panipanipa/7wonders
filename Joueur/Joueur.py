@@ -22,11 +22,11 @@ def Init_Joueur(merveille) :
 
 def ressource_achetable(attributs_vendeur, res_a_acheter):
     #on_cherche_xor = True
-    for res, val in res_a_acheter.items :
+    for res, val in res_a_acheter.items() :
         prod_ac = attributs_vendeur['Production_s'][res]
         if val > prod_ac:
             mem = 10
-            for res_possible in attributs_vendeur.Liste_ressources_possibles:
+            for res_possible in attributs_vendeur['Production_c']['Liste_ressources_possibles']:
                 a = carte.cartes.differencier(res_a_acheter, res_possible)
                 if a < mem:
                     mem = a
@@ -68,11 +68,11 @@ def achat (attributs_acheteur, attributs_vendeur, demande, orientation):
         offre[list_demande[i]] = int(list_demande[i + 1])
         i += 2
 
-    if ressource_achetable(attributs_vendeur, demande):
-        prix = montant_a_payer(attributs_acheteur, demande, orientation)
+    if ressource_achetable(attributs_vendeur, offre):
+        prix = montant_a_payer(attributs_acheteur, offre, orientation)
 
         if prix > attributs_acheteur['Production_s']['Or']:
-            triger_achat_ressource(attributs_acheteur, attributs_vendeur, prix, demande)
+            triger_achat_ressource(attributs_acheteur, attributs_vendeur, prix, offre)
 #
 
 

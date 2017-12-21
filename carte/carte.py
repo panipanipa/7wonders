@@ -57,8 +57,8 @@ def differencier(ressources_manquante, ressources_vendeur):
 def differencier_cartes(ressources_manquante, ressources_joueur):
     mem_m = 0
     mem_g = 0
-    for res, val in ressources_manquante.items:
-        if val > ressources_joueur['res']:
+    for res, val in ressources_manquante.items():
+        if val > ressources_joueur[res]:
             if res in ['Tissu','Verre','Papyrus'] :
                 mem_g += (val - ressources_joueur['res'])
             else :
@@ -210,7 +210,7 @@ carte = {'nom': " ",\
          #fonction qui permet de savoir si la carte est jouable
          #'pre': (Ressources_presente or Est_chainable_id) and not Est_deja_jouee, \
          'pre': lambda att_k, cout_k , id_k, liste_id, id_c : \
-             ( Ressources_presente(att_k, cout_k) or Est_chainable_id(id_c, liste_id)) \
+             (Est_Jouable_Complet(att_k, cout_k) or Est_chainable_id(id_c, liste_id)) \
              and not Est_deja_jouee(id_k, att_k), \
 
          #fonction appliquant l'effet de la carte
@@ -228,16 +228,20 @@ def init_carte_pds(read_excel, att_k):
 attribut_j = dict(attribut.attributs.Attributs)
 karte = dict(carte)
 
-def Est_Jouable_Complet(attribut_j, karte):
+def Est_Jouable_Complet(attribut_j, cout_phrase):
 
     # bool pour savoir si le joueur veut toujours jouer la carte
     playable = True
     # differents cas selon si la carte est chainable
 
+    #creation du dictionnaire de ressources
+    cout = attribut.attributs.stringtoRessources(cout_phrase)
+
+
     # on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
     Ressources_manquante = attribut.attributs.Ressources
     # on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
-    for ress, val in karte.cout.items:
+    for ress, val in cout.items():
         prod_ac = attribut_j['Production_s'][ress]
         if val > prod_ac:
             Ressources_manquante[ress] = val - prod_ac
@@ -247,7 +251,7 @@ def Est_Jouable_Complet(attribut_j, karte):
             Ressources_manquante[ress] = 0
     if not playable :
         playable = True
-        for ress, val in Ressources_manquante.items :
+        for ress, val in Ressources_manquante.items() :
             if Ressources_manquante[ress] != 0 and attribut_j['Production_a'][ress] != 0 :
                 Ressources_manquante[ress] -= attribut_j['Production_a'][ress]
             if Ressources_manquante[ress] > 0 :
@@ -255,8 +259,8 @@ def Est_Jouable_Complet(attribut_j, karte):
         if not playable :
             mem_g = 10
             mem_m = 10
-            for res_possible in attribut_j.Liste_ressources_possibles:
-                a,b = differencier_cartes(Ressources_manquante, res_possible)
+            for res_possible in attribut_j['Production_c']['Liste_ressources_possibles']:
+                a, b = differencier_cartes(Ressources_manquante, res_possible)
                 if a < mem_m:
                     mem_m = a
                 if b < mem_g:
