@@ -173,14 +173,18 @@ cout = ""
 #cout est un string contenant lees clefs des ressources et leur nombre requis avec " " comme separateur
 #exemple : cout = "Bois 2 Pierre 2"
 def Ressources_presente (attribut, cout):
-    i = 0
-    info_c = list()
-    info_c = cout.split(' ')
-    cardinal = len(info_c)
-    Resultat = True
-    while i < cardinal:
-        Resultat = attribut['Production_s'][info_c[i]] >= int(info_c[i+1]) and Resultat
-        i += 2
+    if cout == "" :
+        Resultat = 1;
+    else :
+        i = 0
+        info_c = list()
+        info_c = cout.split(' ')
+        cardinal = len(info_c)
+
+        Resultat = True
+        while i < cardinal:
+            Resultat = attribut['Production_s'][info_c[i]] >= int(info_c[i+1]) and Resultat
+            i += 2
     return Resultat
 
 #fonction qui renvoie le boolean indiquant si la carte a deja ete joue
