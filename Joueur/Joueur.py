@@ -2,10 +2,23 @@ import sys
 sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
 import attribut.attributs
 import carte.carte
+import Wonder.wonder
 
 attributs_acheteur = dict(attribut.attributs.Attributs)
 attributs_vendeur = dict(attribut.attributs.Attributs)
 res_a_acheter = dict(attribut.attributs.Ressources)
+
+Joueur = dict ()
+Joueur = {'attributs' : attribut.attributs.Attributs, \
+    'merveille' : Wonder.wonder.wonder }
+
+merveille = dict(Wonder.wonder.wonder)
+
+def Init_Joueur(merveille) :
+    JoueurI = dict(Joueur)
+    JoueurI['attributs'] = attribut.attributs.init_attribut()
+    JoueurI['merveille'] = merveille
+    return JoueurI
 
 def ressource_achetable(attributs_vendeur, res_a_acheter):
     #on_cherche_xor = True
@@ -43,6 +56,7 @@ def triger_achat_ressource(attributs_acheteur,attributs_vendeur, montant, ressou
     for res, val in ressources_a_ajouter :
         attributs_acheteur['Production_a'][res]+= val
     #cette fonction effectue l'echange d'argent et l'ajout des ressources achetées
+
 
 #
 

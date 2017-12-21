@@ -19,6 +19,13 @@ Production_simple_exemple = {'Pierre' : 2, \
 'Tissu' : 0, \
 'Or' : 5}
 
+Armee = dict()
+Armee = {'Force' : 0, \
+         'PV1' : 0, \
+         'PV3' : 0, \
+         'PV5' : 0, \
+         'PD' : 0, }
+
 #Production_xor : dictionnaire contenant les ressources xor présentes chez les joueurs
 
 Production_c = dict()
@@ -54,8 +61,9 @@ Attributs = {'Nbr_c_b': 0,\
              'Production_s': dict(Ressources),\
              'Production_c': dict(Production_c),\
              'Production_a': dict(Ressources),\
-             'liste_id': list(ID), \
-             'Nbr_PV': 0}
+             'liste_id': list(ID),\
+             'Nbr_PV': 0,\
+             'Armee' : dict(Armee)}
 
 # creation d'une fonction pour creer un attributs
 # probleme de referencement sinon pour les dictionnaire de dictionnaires

@@ -224,7 +224,7 @@ def init_carte_pds(read_excel, att_k):
 attribut_j = dict(attribut.attributs.Attributs)
 karte = dict(carte)
 
-def Est_Jouable_prototype(attribut_j, karte):
+def Est_Jouable_Complet(attribut_j, karte):
 
     # bool pour savoir si le joueur veut toujours jouer la carte
     playable = True
@@ -260,6 +260,48 @@ def Est_Jouable_prototype(attribut_j, karte):
             if mem_m <=attribut_j['Production_c']['JokerM'] and mem_g <= attribut_j['Production_c']['JokerG'] :
                 playable = True
     return playable
+
+
+def Est_Jouable_SimpleAchat(attribut_j, karte):
+# bool pour savoir si le joueur veut toujours jouer la carte
+    playable = True
+# differents cas selon si la carte est chainable
+
+# on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
+    Ressources_manquante = attribut.attributs.Ressources
+# on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
+    for ress, val in karte.cout.items:
+        prod_ac = attribut_j['Production_s'][ress]
+        if val > prod_ac:
+            Ressources_manquante[ress] = val - prod_ac
+            print("il vous manque dans vos ress simples", val - prod_ac, " ", ress, )
+            playable = False
+        else:
+            Ressources_manquante[ress] = 0
+    if not playable:
+        playable = True
+        for ress, val in Ressources_manquante.items:
+            if Ressources_manquante[ress] != 0 and attribut_j['Production_a'][ress] != 0:
+                Ressources_manquante[ress] -= attribut_j['Production_a'][ress]
+            if Ressources_manquante[ress] > 0:
+                playable = False
+    return playable
+
+def Est_Jouable_Xor(attribut_j, Ressources_manquante):
+    playable = False
+    mem_g = 10
+    mem_m = 10
+    for res_possible in attribut_j.Liste_ressources_possibles:
+        a,b = differencier_cartes(Ressources_manquante, res_possible)
+        if a < mem_m:
+            mem_m = a
+        if b < mem_g:
+            mem_g = b
+    if mem_m <=attribut_j['Production_c']['JokerM'] and mem_g <= attribut_j['Production_c']['JokerG'] :
+        playable = True
+    return playable
+
+
 
 ################################################################################################################
         #Tout ce qu'il y a après est inutile

@@ -1,17 +1,20 @@
+import sys
+sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders')
+import Joueur.Joueur
 import attribut.attributs
 import carte.carte
 
-Joueur = dict()
-Joueur = {'attributs': attribut.attributs.Attributs,\
-          'wonder': "indetermine"}
 
-Joueur1 = dict(Joueur)
-Joueur2 = dict(Joueur)
-Joueur3 = dict(Joueur)
+Joueur1 = dict(Joueur.Joueur.Joueur)
+Joueur2 = dict(Joueur.Joueur.Joueur)
+Joueur3 = dict(Joueur.Joueur.Joueur)
 
-Joueur1['attributs']= attribut.attributs.init_attribut()
-Joueur2['attributs']= attribut.attributs.init_attribut()
-Joueur3['attributs']= attribut.attributs.init_attribut()
+Joueur1 = Joueur.Joueur.init_joueur(merveille)
+
+
+#Joueur1['attributs']= attribut.attributs.init_attribut()
+#Joueur2['attributs']= attribut.attributs.init_attribut()
+#Joueur3['attributs']= attribut.attributs.init_attribut()
 
 karte = dict(carte.carte.carte)
 cout_k = "Pierre 1"
