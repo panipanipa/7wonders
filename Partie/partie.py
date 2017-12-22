@@ -8,6 +8,7 @@ import Wonder.wonder
 Liste_joueurs = list[]
 Science = dict(A.Science)
 
+#fonction pour compter les points de Science
 def pvscience(Science) :
     Total = 0
     Total += Science['Psm'] * Science['Psm']
@@ -22,6 +23,7 @@ def pvscience(Science) :
 
 Guerre = dict(A.Armee)
 
+#fonction pour compter les points de baston !
 def pvGuerre(Guerre)
     Total = 0
     Total += Guerre['Pv1']
@@ -30,12 +32,14 @@ def pvGuerre(Guerre)
     Total -= Guerre['PD']
     return Total
 
+#fonction qui reçoit un nombre de joueurs et renvoie une liste de joueurs initialisée
 def Init_Partie(nb_joueur) :
     Liste_r=list[]
     for i in nb_joueur :
         Liste_r[i]=J.Init_Joueur
     return Liste_r
 
+#fonction qui prend en argument une liste de joueurs et qui dit qui a gagné
 def Fin_de_Partie(Liste_joueurs):
     liste_point = list()
     for jo in enumerate(Liste_joueurs) :
@@ -45,4 +49,10 @@ def Fin_de_Partie(Liste_joueurs):
     for tupple_point in enumerate(liste_point) :
         print("le joueur" tupple_point[0]+1 "a marqué" tupple_point[1] "points")
         print("c'est la fin du jeu ! GG WP")
+
+#fonction qui prend en argument un nombre de joueur et qui retourne une liste de cartes randomisée : paquet
+def Init_Paquet(nb_joueurs, age):
+
+
+def Distribuer_Cartes(age, Liste_joueurs, paquet):
 

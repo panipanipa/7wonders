@@ -2,24 +2,32 @@ import sys
 sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
 import attribut.attributs
 import carte.carte
-import Wonder.wonder
+import Wonder.wonder as W
 
+#definition de nos variables
 attributs_acheteur = dict(attribut.attributs.Attributs)
 attributs_vendeur = dict(attribut.attributs.Attributs)
 res_a_acheter = dict(attribut.attributs.Ressources)
 
+Liste_c=list()
+
+#definition du type joueur : ce n'est qu'un ensemble d'attribut associé à une merveille et à une main
 Joueur = dict ()
 Joueur = {'attributs' : attribut.attributs.Attributs, \
-    'merveille' : Wonder.wonder.wonder }
+          'merveille' : W.wonder, \
+          'cartes' : Liste_c}
 
-merveille = dict(Wonder.wonder.wonder)
+merveille = dict(W.wonder)
 
+#fonction qui renvoie un type joueur si on lui donne une merveille (qu'on aura répartit au hasard)
 def Init_Joueur(merveille) :
     JoueurI = dict(Joueur)
     JoueurI['attributs'] = attribut.attributs.init_attribut()
     JoueurI['merveille'] = merveille
+    JoueurI['cartes'] = []
     return JoueurI
 
+#fonction qui prend en argument des ressources et un joueur ou les acheter, elle renvoie un booléan disant si on peut les acheter
 def ressource_achetable(attributs_vendeur, res_a_acheter):
     #on_cherche_xor = True
     for res, val in res_a_acheter.items() :
@@ -34,7 +42,7 @@ def ressource_achetable(attributs_vendeur, res_a_acheter):
                 return False
     return True
 
-#on dit à la fonction ce qu'il achète ou)
+#orientation = droite ou gauche, partant du postulat que la ressource est achetable, celle-ci renvoie le montant qu'il faudra payer
 def montant_a_payer(attributs_acheteur, res_a_acheter,orientation):
     montant = 0
     for res, val in res_a_acheter :
@@ -55,7 +63,7 @@ def triger_achat_ressource(attributs_acheteur,attributs_vendeur, montant, ressou
     attributs_vendeur['Production_s']['Or'] += montant
     for res, val in ressources_a_ajouter :
         attributs_acheteur['Production_a'][res]+= val
-    #cette fonction effectue l'echange d'argent et l'ajout des ressources achetées
+    #cette fonction effectue l'echange d'argent et l'ajout des ressources achetées, il faut au préalable s'assurer que le joueur a l'argent
 
 # demande est un string
 # cle  puis le nombre voulu

@@ -1,35 +1,38 @@
 import sys
 sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders')
-import Joueur.Joueur
-import attribut.attributs
-import carte.carte
+import Joueur.Joueur as J
+import attribut.attributs as A
+import carte.carte as C
+import Wonder.wonder as W
 
+Joueur1 = dict(J.Joueur)
+Joueur2 = dict(J.Joueur)
+Joueur3 = dict(J.Joueur)
 
-Joueur1 = dict(Joueur.Joueur.Joueur)
-Joueur2 = dict(Joueur.Joueur.Joueur)
-Joueur3 = dict(Joueur.Joueur.Joueur)
+merveille = W.wonder
 
-Joueur1 = Joueur.Joueur.Init_Joueur("merveille")
-Joueur2 = Joueur.Joueur.Init_Joueur("merveille")
-Joueur3 = Joueur.Joueur.Init_Joueur("merveille")
+Joueur1 = J.Init_Joueur(merveille)
+Joueur2 = J.Init_Joueur(merveille)
+Joueur3 = J.Init_Joueur(merveille)
 
+#Joueur1['attributs']['Ressources_s']['Bois'] = 1
 
 #Joueur1['attributs']= attribut.attributs.init_attribut()
 #Joueur2['attributs']= attribut.attributs.init_attribut()
 #Joueur3['attributs']= attribut.attributs.init_attribut()
 
-karte = dict(carte.carte.carte)
+karte = dict(C.carte)
 cout_k = "Pierre 1"
 karte['nom'] = "Bains"
 karte['couleur'] = 'b'
 karte['id'] = 3
-if karte['pre'] (Joueur1['attributs'] , cout_k, 3, Joueur1['attributs']['liste_id'], 0):
+if karte['pre'](Joueur1['attributs'], cout_k, 3, Joueur1['attributs']['liste_id'], 0):
     karte['post']("Nbr_PV 3", Joueur1['attributs'])
     Joueur1['attributs']['liste_id'].append(karte['id'])
 
 print("joueur 1 :\n" , Joueur1)
 
-karte = dict(carte.carte.carte)
+karte = dict(C.carte)
 cout_k = ""
 karte['nom'] = "Chantier"
 karte['couleur'] = 'm'

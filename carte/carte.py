@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
-import attribut.attributs
+import attribut.attributs as A
 import os
 # os.chdir("/home/denis/PycharmProjects/7wonder/carte")
 # faudra changer cette commande selon ton cas
@@ -66,14 +66,14 @@ def differencier_cartes(ressources_manquante, ressources_joueur):
     return mem_m, mem_g
 
 
-liste_attribut = list();
+#liste_attribut = list();
 #A1 attribut joueur gauche
-A1=attribut
+#A1=attribut
 #A2 attribut du joueur jouant
-A2=attribut
+#A2=attribut
 #A3 attribut du joueur de droite
-A3=attribut
-liste_attribut = [A1, A2, A3]
+#A3=attribut
+#liste_attribut = [A1, A2, A3]
 
 
 def Faut_il_faire_un_truc(Ressource_manquante) -> object:
@@ -195,7 +195,7 @@ def Est_deja_jouee(id, attribut):
             Resultat = True
     return Resultat
 
-
+cout = dict(A.Ressources)
 
 #definition de notre type carte
 carte = dict()
@@ -207,9 +207,12 @@ carte = {'nom': " ",\
          #entier associe a une carte pour la designer
          'id' : 0,\
 
+         #cout défini comme un dictionnaire de ressources
+         'cout': cout, \
+
          #fonction qui permet de savoir si la carte est jouable
          #'pre': (Ressources_presente or Est_chainable_id) and not Est_deja_jouee, \
-         'pre': lambda att_k, cout_k , id_k, liste_id, id_c : \
+         'pre': lambda att_k, cout_k, id_k, liste_id, id_c : \
              (Est_Jouable_Complet(att_k, cout_k) or Est_chainable_id(id_c, liste_id)) \
              and not Est_deja_jouee(id_k, att_k), \
 
@@ -225,21 +228,16 @@ def init_carte_pds(read_excel, att_k):
     karte['post'] (read_excel[2],att_k)
     karte['pre'] (att_k, read_excel[3], karte['id'], att_k['liste_id'], read_excel[4])
 
-attribut_j = dict(attribut.attributs.Attributs)
+attribut_j = dict(A.Attributs)
 karte = dict(carte)
 
-def Est_Jouable_Complet(attribut_j, cout_phrase):
+#fonction qui prend des attributs (joueur) et un cout, et qui renvoie si la carte est jouable
+def Est_Jouable_Complet(attribut_j, cout):
 
-    # bool pour savoir si le joueur veut toujours jouer la carte
+    #Boolean qu'on renverra a la fin
     playable = True
-    # differents cas selon si la carte est chainable
-
-    #creation du dictionnaire de ressources
-    cout = attribut.attributs.stringtoRessources(cout_phrase)
-
-
     # on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
-    Ressources_manquante = attribut.attributs.Ressources
+    Ressources_manquante = A.Ressources
     # on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
     for ress, val in cout.items():
         prod_ac = attribut_j['Production_s'][ress]
@@ -250,13 +248,16 @@ def Est_Jouable_Complet(attribut_j, cout_phrase):
         else:
             Ressources_manquante[ress] = 0
     if not playable :
+    #si il manque une ressource apres avoir check les ressources simples, on continue
         playable = True
+    #on reset le booléan a renvoyer
         for ress, val in Ressources_manquante.items() :
             if Ressources_manquante[ress] != 0 and attribut_j['Production_a'][ress] != 0 :
                 Ressources_manquante[ress] -= attribut_j['Production_a'][ress]
             if Ressources_manquante[ress] > 0 :
                 playable = False
         if not playable :
+    #si il manque une ressource apres avoir check les ressources achetées, on continue
             mem_g = 10
             mem_m = 10
             for res_possible in attribut_j['Production_c']['Liste_ressources_possibles']:
@@ -265,16 +266,17 @@ def Est_Jouable_Complet(attribut_j, cout_phrase):
                     mem_m = a
                 if b < mem_g:
                     mem_g = b
+    #on parcourt notre liste de ressources multiples, et on cherche l'ensemble de ressources qui se rapproche le plus de ce qu'il reste à payer (minimum)
             if mem_m <=attribut_j['Production_c']['JokerM'] and mem_g <= attribut_j['Production_c']['JokerG'] :
                 playable = True
+    #les Jokers sont les cartes de ressources 1 parmi 3 avancées ou 1 parmi 4 de base
     return playable
 
+#En dessous, c'est la coupure en deux de la fonction au dessus
 
 def Est_Jouable_SimpleAchat(attribut_j, karte):
-# bool pour savoir si le joueur veut toujours jouer la carte
-    playable = True
-# differents cas selon si la carte est chainable
 
+    playable = True
 # on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
     Ressources_manquante = attribut.attributs.Ressources
 # on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
