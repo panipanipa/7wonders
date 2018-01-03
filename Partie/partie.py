@@ -4,6 +4,7 @@ import attribut.attributs as A
 import pandas
 import carte.carte as C
 import Joueur.Joueur as J
+import random.py as R
 import Wonder.wonder
 
 Liste_joueurs = list()
@@ -55,7 +56,7 @@ def Fin_de_Partie(Liste_joueurs):
 
 #fonction qui prend en argument un nombre de joueur et qui retourne une liste de cartes randomisée : paquet
 def Init_Paquet(nb_joueurs, age):
-    paquet = list[]
+    paquet = list()
     df_e = pandas.read_excel("7wonder_cartes.xlsx","Sheet1")
     data_array = df_e.values
     if age == 1 :
@@ -82,6 +83,12 @@ def Init_Paquet(nb_joueurs, age):
             carte = C.Init_Carte(i, data_array)
             # aurais-tu l'extrême bonté et l'ultime magnanimitude de bien vouloir vérifier cette ligne DENIS, s'il t'en plait
             liste_guilde.append(carte)
+        while nb_guilde_ajout != 0:
+            a = R.randint(0, len.liste_guilde)
+            paquet.append(liste_guilde[a])
+            del liste_guilde[a]
+            nb_guilde_ajout = nb_guilde_ajout - 1
+        return paquet
 
 
     return paquet
