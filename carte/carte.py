@@ -1,4 +1,5 @@
 import sys
+import copy
 sys.path.insert(1, '/home/tek/Desktop/7wonders/7wonders' )
 import attribut.attributs as A
 import os
@@ -142,6 +143,38 @@ def Trigger_effet(effet, at_joueur):
     info = effet.split(' ')
     at_joueur[info[0]] += int(info[1])
 
+def Effet_xor(effet, at_joueur):
+    nouvelle_liste=list()
+    #nouvelle_liste = list(at_joueur['Production_c']['Liste_ressources_possibles'])
+    nouvelle_liste = copy.deepcopy(at_joueur['Production_c']['Liste_ressources_possibles'])
+    cardinal = len(at_joueur['Production_c']['Liste_ressources_possibles'])
+
+
+    info = effet.split(' ')
+    i = 0
+
+    if cardinal == 0 :
+        att = dict(A.Ressources)
+        att[info[0]] += int(info[1])
+        at_joueur['Production_c']['Liste_ressources_possibles'].append(att)
+        att = dict(A.Ressources)
+        att[info[2]] += int(info[3])
+        nouvelle_liste.append(att)
+    else:
+        for i in range(cardinal) :
+            at_joueur['Production_c']['Liste_ressources_possibles'][i][info[0]] += int(info[1])
+            nouvelle_liste[i][info[2]] += int(info[3])
+           # print(nouvelle_liste[i] is at_joueur['Production_c']['Liste_ressources_possibles'][i] )
+
+
+    at_joueur['Production_c']['Liste_ressources_possibles'].extend(nouvelle_liste)
+
+
+
+
+
+
+
 def test_trigger(info, at_joueur):
     Trigger_effet(info, at_joueur)
     print(at_joueur['Bois'])
@@ -207,14 +240,17 @@ carte = {'nom': " ",\
          #entier associe a une carte pour la designer
          'id' : 0,\
 
+         #entier dont pre renvoit vrai si deja jouer par le joueur
+         'id_c': -1,\
+
          #cout défini comme un dictionnaire de ressources
          'cout': cout, \
 
          #fonction qui permet de savoir si la carte est jouable
          #'pre': (Ressources_presente or Est_chainable_id) and not Est_deja_jouee, \
-         'pre': lambda att_k, cout_k, id_k, liste_id, id_c : \
-             (Est_Jouable_Complet(att_k, cout_k) or Est_chainable_id(id_c, liste_id)) \
-             and not Est_deja_jouee(id_k, att_k), \
+         'pre': lambda att_k : \
+             (Est_Jouable_Complet(att_k, carte['cout']) or Est_chainable_id(carte['id_c'], att_k['liste_id'])) \
+             and not Est_deja_jouee(carte['id'] , att_k), \
 
          #fonction appliquant l'effet de la carte
          'post':  Trigger_effet,\
@@ -226,7 +262,7 @@ def init_carte_pds(read_excel, att_k):
     karte['id'] = read_excel[7]
     karte['couleur'] = read_excel[6]
     karte['post'] (read_excel[2],att_k)
-    karte['pre'] (att_k, read_excel[3], karte['id'], att_k['liste_id'], read_excel[4])
+    karte['pre'] (att_k)
 
 attribut_j = dict(A.Attributs)
 karte = dict(carte)
@@ -278,7 +314,7 @@ def Est_Jouable_SimpleAchat(attribut_j, karte):
 
     playable = True
 # on crée une dictionnaire de ressources manquantes, tant qu'il est pas égal à 0 on renvoie continue
-    Ressources_manquante = attribut.attributs.Ressources
+    Ressources_manquante = A.Ressources
 # on parcourt notre liste de ressource à payer et leur nombre, on compare avec la production et on stocke dans ressource manquante
     for ress, val in karte.cout.items:
         prod_ac = attribut_j['Production_s'][ress]

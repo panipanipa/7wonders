@@ -43,7 +43,7 @@ if karte['pre'] (Joueur2['attributs'] , cout_k, 9, Joueur2['attributs']['liste_i
 
 print("joueur 2 : \n" , Joueur2)
 
-karte = dict(carte.carte.carte)
+karte = dict(C.carte)
 cout_k = ""
 karte['nom'] = "Cavite"
 karte['couleur'] = 'm'
