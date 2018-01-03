@@ -111,5 +111,26 @@ def Distribuer_Paquet(paquet, Liste_joueurs) :
             #je leur donne une carte random, je l'enlève de la liste
 
 
-def Distribuer_Cartes(age, Liste_joueurs, paquet):
-    return
+def Jouer_Carte(Joueur, Defausse) :
+    Jouee = False
+    while Jouee == False :
+        A = input("Sélectionnez une carte en indiquant sa position dans votre main (start à 1)")
+        #On demande au joueur d'indiquer la carte avec laquelle il va intéragir
+        Boo = input("Que voulez vous en faire ? 1 == la jouer     2 == la défausser")
+        #Il indique comment il va intéragir avec, il faudra implémenter le fait de construire la merveille
+        if Boo == 2 :
+            Defausse.append(Joueur['cartes'][A])
+            del Joueur['cartes'][A]
+            Joueur['Attributs']['Ressources_S']['Or'] += 3
+            Jouee = True
+        if Boo == 1 :
+            if Joueur['cartes'][A]['pre'](Joueur['Attributs']) :
+                Joueur['cartes'][A]['post'](Joueur['Attributs'])
+                del Joueur['cartes'][A]
+                Jouee = True
+            else :
+                print("vous ne pouvez pas jouer cette carte")
+        else :
+            print("vous avez entré une valeur invalide")
+
+
