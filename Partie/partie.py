@@ -133,4 +133,122 @@ def Jouer_Carte(Joueur, Defausse) :
         else :
             print("vous avez entré une valeur invalide")
 
+             
+def Swap_main(age, Liste_Joueurs) :
+    if age == 1 or age == 3 :
+    #on regarde si on change à droite ou a gauche
+        aux = Liste_Joueurs[-1]['cartes']
+        for Jou in len.Liste_Joueurs :
+            if Jou != len.Liste_Joueurs :
+                Liste_Joueurs[-Jou]['cartes'] = Liste_Joueurs[-Jou-1]['cartes']
+            else :
+                Liste_Joueurs[-Jou]['cartes'] = aux
+    if age == 2 :
+        aux = Litse_Joueurs[0]
+        for Jou in len.Liste_Joueurs :
+            if Jou != len.Liste_Joueurs :
+                Liste_Joueurs[Jou]['cartes'] = Liste_Joueurs[Jou+1]['cartes']
+            else :
+                Liste_Joueurs[Jou]['cartes'] = aux
 
+cel_achat = dict()
+cel_achat = {'id_joueur' : 0, \
+'montant' : 0, \
+'Ressources' : dict(A.Ressources), \
+'orientation' : 0}
+
+def Phase_Achat(Liste_Joueurs) :
+    liste_trig_achat = list()
+    #On va faire nos achats dans un premier temps, les rendre effectifs dans un second temps, la on crée des mémoires
+    for num, Jou in enumerate.Liste_Joueurs :
+    #On énumère nos joueurs
+        print("c'est au joueur ")
+        print(num+1)
+    #Ne pas oublier de montrer les cartes
+        A = input("voulez vous acheter des ressources ? 1 pour oui 0 pour non")
+        while A :
+    #La phase d'achat
+            O = input ("D pour acheter à droite, G pour acheter à gauche")
+            Ress_Achat = dict(A.Ressources)
+            for Re in Ress_Achat.keys :
+                I = input("combien voulez vous acheter de " + Re)
+                Ress_Achat[Re] = I
+    #A ce moment, on a constitué notre répertoire de ressources à acheter
+            if O == 'D' :
+                orientation = 'droite'
+                o = 1
+            if O == 'G' :
+                orientation = 'gauche'
+                o = -1
+            Vendeur = Liste_Joueurs[num+o % len.Liste_Joueurs]
+    #Ici on différencie les cas droite et gauche
+            if J.ressource_achetable(Vendeur['Attribut'], Ress_Achat) :
+                m = J.montant_a_payer(Jou['Attributs'],Ress_Achat,orientation)
+                if m <=Jou['Attributs']['Ressources_Simples']['Or'] :
+                    Achat = dict(cel_achat)
+                    Achat['id_joueur'] = num
+                    Achat['montant'] = m
+                    Achat['Ressources'] = Ress_Achat
+                    Achat['orientation'] = o
+                    liste_trig_achat.append(Achat)
+    #On stocke en mémoire les infos nécesaires pour trigger les achats
+                else :
+                    print("vous n'avez pas d'or pour faire ça ...")
+            else :
+                print("le joueur n'a pas ces ressources")
+            A = input("voulez-vous acheter autre chose ? 1 pour oui 0 pour non")
+    for c_achat in liste_trig_achat :
+        J.trigger_achat_ressources(Liste_Joueurs[c_achat['id_joueur']]['Attributs'],Liste_Joueurs[c_achat['id_joueur']+c_achat['orientation']%len.Liste_Joueurs]['Attributs'],c_achat['montant'],c_achat['Ressources'])
+    #maintenant qu'on s'est assurer que tout le monde peut ou non faire ses actions, on les fait
+    #ça évite les problèmes de simultanéité
+                            
+def Phase_Jeu(Liste_Joueurs, Defausse) :            
+    print("Sélectionnez votre carte et ce que vous voulez en faire")
+    for Jou in Liste_Joueurs :
+        Jouer_Carte(Jou, Defausse)
+
+def Age(ag, Liste_Joueurs, Defausse) :
+    paq = Init_Paquet(len.Liste_Joueurs,ag)
+    Distribuer_Paquet(paq, Liste_Joueurs)
+#init du paquet et distribution des cartes
+    for a in (1,6) :
+        print("phase"+str(a)+"de l'age"+str(ag))
+        Phase_Achat(Liste_Joueurs)
+        Phase_Jeu(Liste_Joueurs,Defausse)
+        Swap_main(ag, Liste_Joueurs)
+#Les tours de jeu
+    for num, Jou in enumerate.Liste_Joueurs :
+#rajouter un cas pour la merveille ui fait qu'on peut jouer nos 2 dernières cartes ici, pas obligatoire maintenant
+        Defausse.append(Jou['cartes'][0])
+        del Jou['cartes'][0]
+        if ag == 1 :
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV1'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num-1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV1'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+        if ag == 2 :
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV3'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num-1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV3'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+        else :
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV5'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+            if Jou['Attributs']['Force'] > Liste_Joueurs[num-1 % len.Liste_Joueurs]['Attributs']['Force'] :
+                Jou['Attributs']['Armee']['PV5'] += 1
+                Liste_Joueurs[num+1 % len.Liste_Joueurs]['Attributs']['Armee']['PD'] += 1
+
+def Partie() :
+    j=input("combien de joueurs etes vous ?")
+    Liste_J=Init_Partie(j)
+    Defausse=list()
+    Defausse=[]
+    Age(1,Liste_j,Defausse)
+    Age(2,Liste_j,Defausse)
+    Age(3,Liste_j,Defausse)
+    Fin_de_Partie(Liste_J)
